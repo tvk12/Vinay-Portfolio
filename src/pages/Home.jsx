@@ -44,7 +44,7 @@ export default function Home() {
                     className="flex flex-col sm:flex-row gap-6 justify-center items-center"
                 >
                     <Link to="/projects">
-                        <Button variant="primary" className="min-w-[200px]">Explorer Projects</Button>
+                        <Button variant="primary" className="min-w-[200px]">Explore Projects</Button>
                     </Link>
                     <Link to="/contact">
                         <Button variant="secondary" className="min-w-[200px]">Get in Touch</Button>
