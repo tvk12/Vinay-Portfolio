@@ -22,6 +22,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         display: ['Outfit', 'sans-serif'],
+        signature: ['Caveat', 'cursive'],
       },
       animation: {
         'shimmer': 'shimmer 2s linear infinite',

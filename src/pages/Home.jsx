@@ -6,8 +6,19 @@ import AboutSection from '../components/AboutSection';
 export default function Home() {
     return (
         <div className="relative min-h-[90vh] flex flex-col items-center justify-center pt-20 overflow-hidden">
-            {/* Background Decorative Element */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse" />
+            {/* Background Decorative Element - Subtly enhanced */}
+            <motion.div
+                animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.1, 0.15, 0.1],
+                }}
+                transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[120px] -z-10"
+            />
 
             <div className="container mx-auto px-4 text-center z-10">
                 <motion.div
@@ -49,6 +60,9 @@ export default function Home() {
                     <Link to="/contact">
                         <Button variant="secondary" className="min-w-[200px]">Get in Touch</Button>
                     </Link>
+                    <a href="/resume.pdf" download="Vinay_Kumar_Tanneeru_Resume.pdf">
+                        <Button variant="outline" className="min-w-[200px]">Download Resume</Button>
+                    </a>
                 </motion.div>
             </div>
 
