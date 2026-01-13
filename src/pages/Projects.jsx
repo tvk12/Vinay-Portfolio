@@ -12,11 +12,15 @@ export default function Projects() {
                 { label: "Inference", value: "<100ms" }
             ],
             links: {
-                github: "https://github.com/tvk12/SMS-Spam-Detection"
+                github: "https://github.com/tvk12/SMS-Spam-Detection",
+                demo: "https://vinay-sms-spam.vercel.app"
             },
             details: {
                 problem: "SMS spam poses security risks and reduces user trust. Traditional keyword filters fail against evolving adversarial attacks.",
-                approach: "Fine-tuned 'bert-base-uncased' on 5,500+ messages. Implemented a REST API using FastAPI and containerized with Docker for seamless deployment.",
+                dataset: "UCI SMS Spam Collection (5.5k+ messages) + custom targeted spam samples.",
+                approach: "Fine-tuned 'bert-base-uncased' using a custom classification head. Implemented weighted loss to handle class imbalance.",
+                tools: ["PyTorch", "HuggingFace", "FastAPI", "Docker", "AWS"],
+                architecture_desc: "Client -> FastAPI (Gunicorn) -> BERT Inference (ONNX Optimized) -> Result Wrapper",
                 learnings: "Transformer models significantly outperform LSTMs in capturing semantic context for short-text classification."
             }
         },
@@ -33,7 +37,10 @@ export default function Projects() {
             },
             details: {
                 problem: "Stroke is a leading cause of disability. Early identification of high-risk patients can save lives but clinical data is often imbalanced.",
-                approach: "Addressed class imbalance using SMOTE. Evaluated Random Forest, SVM, and XGBoost. Created an interactive dashboard for clinical use.",
+                dataset: "Kaggle Stroke Prediction Dataset (Clinical features: BMI, Hypertension, etc.)",
+                approach: "Comprehensive pipeline: SMOTE for oversampling, Feature Engineering (polynomial features), and ensemble of XGBoost & Random Forest.",
+                tools: ["Scikit-Learn", "XGBoost", "Streamlit", "Joblib", "Plotly"],
+                architecture_desc: "Data Ingestion -> SMOTE Pipeline -> Cross-Validation Filter -> Frontend Dashboard",
                 learnings: "Feature engineering (Age, Hypertension, BMI) proved more critical than model complexity in this diagnostic task."
             }
         },
@@ -50,7 +57,10 @@ export default function Projects() {
             },
             details: {
                 problem: "Misinformation spreads rapidly online. Scalable tool needed to verify large volumes of text in real-time.",
+                dataset: "ISOT Fake News Dataset + Real-world news scraping from reliable API sources.",
                 approach: "Implemented a modular NLP pipeline: tokenization, stop-word removal, and TF-IDF vectorization. Trained a PassiveAggressiveClassifier for online learning.",
+                tools: ["NLTK", "Scikit-Learn", "Flask", "Pandas", "WordCloud"],
+                architecture_desc: "Text Source -> NLP Preprocessor -> Multi-Vectorization -> PA Classifier -> Legitimacy Score",
                 learnings: "Real-time verification requires a balance between model depth and computational latency."
             }
         }

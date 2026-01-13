@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Database, Cloud, Code2, BrainCircuit, Github, Linkedin, Mail } from 'lucide-react';
+import { Database, Cloud, Code2, BrainCircuit, Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
 import AboutSection from '../components/AboutSection';
 
@@ -129,6 +129,37 @@ export default function Home() {
             >
                 <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-20" />
                 <AboutSection />
+            </motion.div>
+
+            {/* Blog Preview Section */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="max-w-6xl mx-auto px-4 py-24 border-t border-white/5"
+            >
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                    <div>
+                        <h2 className="text-3xl font-bold mb-4">Latest <span className="text-accent">Insights</span></h2>
+                        <p className="text-gray-400 max-w-md">Sharing my journey and technical deep-dives in AI and Cloud Architecture.</p>
+                    </div>
+                    <Link to="/blog" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent hover:text-white transition-colors">
+                        View All Posts <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Link to="/blog" className="glass-card p-8 group hover:border-accent/20 transition-all border border-white/5">
+                        <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4 block">Deployment</span>
+                        <h4 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors">How I built a Spam SMS detector using BERT</h4>
+                        <p className="text-gray-400 text-sm line-clamp-2">Deep dive into fine-tuning transformer models for real-time text classification with high precision.</p>
+                    </Link>
+                    <Link to="/blog" className="glass-card p-8 group hover:border-accent/20 transition-all border border-white/5">
+                        <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4 block">Cloud Systems</span>
+                        <h4 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors">Deploying ML models with FastAPI + AWS</h4>
+                        <p className="text-gray-400 text-sm line-clamp-2">Step-by-step guide to containerizing and deploying production-ready inference APIs.</p>
+                    </Link>
+                </div>
             </motion.div>
 
             {/* Final CTA Section */}
