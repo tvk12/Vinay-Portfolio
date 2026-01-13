@@ -12,8 +12,7 @@ export default function Projects() {
                 { label: "Inference", value: "<100ms" }
             ],
             links: {
-                github: "https://github.com/tvk12/SMS-Spam-Detection",
-                demo: "#"
+                github: "https://github.com/tvk12/SMS-Spam-Detection"
             },
             details: {
                 problem: "SMS spam poses security risks and reduces user trust. Traditional keyword filters fail against evolving adversarial attacks.",
@@ -30,8 +29,7 @@ export default function Projects() {
                 { label: "F1 Score", value: "0.91" }
             ],
             links: {
-                github: "https://github.com/tvk12/Brain-Stroke-Detection",
-                demo: "#"
+                github: "https://github.com/tvk12/Brain-Stroke-Detection"
             },
             details: {
                 problem: "Stroke is a leading cause of disability. Early identification of high-risk patients can save lives but clinical data is often imbalanced.",
@@ -48,8 +46,7 @@ export default function Projects() {
                 { label: "Precision", value: "92.5%" }
             ],
             links: {
-                github: "https://github.com/tvk12/News-Legitimacy",
-                demo: "#"
+                github: "https://github.com/tvk12/News-Legitimacy"
             },
             details: {
                 problem: "Misinformation spreads rapidly online. Scalable tool needed to verify large volumes of text in real-time.",

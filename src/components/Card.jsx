@@ -48,14 +48,9 @@ export default function Card({ title, description, tags = [], metrics = [], link
 
                 {/* Buttons */}
                 <div className="flex flex-wrap gap-3 mt-auto">
-                    {links.github && (
+                    {links.github && links.github !== "#" && (
                         <a href={links.github} target="_blank" rel="noopener noreferrer" className="p-2 glass rounded-lg text-gray-400 hover:text-white hover:border-accent/30 transition-all" title="GitHub Source">
                             <Github size={18} />
-                        </a>
-                    )}
-                    {links.demo && (
-                        <a href={links.demo} target="_blank" rel="noopener noreferrer" className="p-2 glass rounded-lg text-gray-400 hover:text-white hover:border-accent/30 transition-all" title="Live Demo">
-                            <ExternalLink size={18} />
                         </a>
                     )}
                     <button
