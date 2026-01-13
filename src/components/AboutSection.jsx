@@ -45,11 +45,21 @@ export default function AboutSection() {
                     <h2 className="text-4xl font-bold mb-8 text-white tracking-tight">Professional <span className="text-accent">Summary</span></h2>
                     <div className="space-y-6 text-gray-400 leading-relaxed text-lg">
                         <p>
-                            Motivated Computer Science graduate student seeking entry-level opportunities in <span className="text-white font-medium">Artificial Intelligence</span>, <span className="text-white font-medium">Machine Learning</span>, <span className="text-white font-medium">Python Development</span>, and <span className="text-white font-medium">Cloud Computing</span>.
+                            Master’s in Computer Science student at the <span className="text-white font-medium">University of Dayton</span>, specializing in AI/ML and Cloud Systems. I bridge the gap between complex data science research and production-ready applications.
                         </p>
-                        <p>
-                            Strong foundation in programming, data structures, and cloud fundamentals through academic coursework and hands-on projects. Passionate about building real-world solutions and growing as a software engineer.
-                        </p>
+                        <ul className="space-y-3 list-none">
+                            {[
+                                "Expertise in NLP, Deep Learning, and Predictive Modeling.",
+                                "Proven track record in building and deploying scalable MLOps pipelines.",
+                                "Cloud-native mindset with hands-on AWS experience.",
+                                "Focus on Secure AI, model ethics, and performance optimization."
+                            ].map((strength, i) => (
+                                <li key={i} className="flex gap-3 items-start">
+                                    <span className="text-accent mt-1.5">•</span>
+                                    <span>{strength}</span>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
 
                     <div className="flex gap-4 mt-8">
