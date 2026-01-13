@@ -51,12 +51,7 @@ export default function Card({ title, description, tags = [], metrics = [], link
                             Source
                         </a>
                     )}
-                    {links.demo && links.demo !== "#" && (
-                        <a href={links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 glass rounded-xl text-accent hover:bg-accent/10 hover:border-accent/30 transition-all font-semibold text-xs uppercase tracking-wider" title="Live Demo">
-                            <ExternalLink size={16} />
-                            Live Demo
-                        </a>
-                    )}
+
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
                         className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-xl ${isExpanded ? 'bg-accent text-black' : 'glass text-white/70 hover:text-white hover:border-white/20'}`}
@@ -73,8 +68,9 @@ export default function Card({ title, description, tags = [], metrics = [], link
                             initial={{ opacity: 0, height: 0, marginTop: 0 }}
                             animate={{ opacity: 1, height: 'auto', marginTop: 32 }}
                             exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                            className="pt-8 border-t border-white/10 space-y-8"
+                            className="pt-8 border-t border-white/10 space-y-12"
                         >
+                            {/* Problem & Approach */}
                             <div className="grid md:grid-cols-2 gap-8">
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 text-accent">
@@ -108,40 +104,113 @@ export default function Card({ title, description, tags = [], metrics = [], link
                                 </div>
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-8">
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-2 text-accent">
-                                        <Layers size={18} />
-                                        <h4 className="font-bold text-sm uppercase tracking-widest">Architecture</h4>
-                                    </div>
-                                    <div className="relative aspect-video rounded-2xl bg-black/60 border border-white/5 flex items-center justify-center group/arch overflow-hidden">
-                                        <div className="absolute inset-0 bg-accent/5 opacity-40 group-hover/arch:opacity-60 transition-opacity" />
-                                        <p className="text-[10px] text-gray-500 font-mono text-center px-6 leading-relaxed">
-                                            {details.architecture_desc || "Deployment pipeline featuring API layer, model inference, and real-time processing."}
-                                        </p>
-                                        <div className="absolute bottom-2 right-2 flex gap-1 items-center">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                            <span className="text-[8px] uppercase tracking-tighter text-gray-600 font-bold">Inference Active</span>
+                            {/* Architecture Diagram */}
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-2 text-accent">
+                                    <Layers size={18} />
+                                    <h4 className="font-bold text-sm uppercase tracking-widest">System Architecture</h4>
+                                </div>
+                                <div className="relative w-full rounded-2xl bg-black/40 border border-white/5 p-6 overflow-hidden">
+                                    {/* Simple SVG Flow Diagram - Horizontal Scroll */}
+                                    {details.architecture ? (
+                                        <div className="overflow-x-auto pb-4 -mb-4 scrollbar-hide">
+                                            <div className="flex items-center justify-between min-w-max gap-4 relative z-10 px-2">
+                                                {details.architecture.map((step, idx) => (
+                                                    <div key={idx} className="flex items-center">
+                                                        <div className="min-w-[100px] px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-center backdrop-blur-sm hover:border-accent/40 hover:bg-white/10 transition-all duration-300 group/step">
+                                                            <span className="text-[11px] font-bold uppercase tracking-wider text-gray-300 group-hover/step:text-white transition-colors whitespace-nowrap">
+                                                                {step}
+                                                            </span>
+                                                        </div>
+                                                        {idx < details.architecture.length - 1 && (
+                                                            <div className="flex items-center justify-center w-8 text-accent mx-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                    <path d="M5 12h14m-7-7l7 7-7 7" />
+                                                                </svg>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <div className="text-center text-gray-500 py-8">Architecture diagram not available</div>
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent opacity-20 pointer-events-none" />
                                 </div>
-
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-2 text-accent">
-                                        <Lightbulb size={18} />
-                                        <h4 className="font-bold text-sm uppercase tracking-widest">Learnings & Results</h4>
-                                    </div>
-                                    <div className="bg-accent/5 p-6 rounded-2xl border border-accent/10 relative">
-                                        <p className="text-gray-300 text-sm italic relative z-10 leading-relaxed">
-                                            "{details.learnings}"
-                                        </p>
-                                    </div>
-                                </div>
+                                <p className="text-[10px] text-gray-500 font-mono text-center">
+                                    {details.architecture_desc}
+                                </p>
                             </div>
+
+                            {/* Model Metrics & Evaluation */}
+                            {details.model_metrics && (
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-2 text-accent">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                                        <h4 className="font-bold text-sm uppercase tracking-widest">Model Evaluation</h4>
+                                    </div>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        {/* Metrics Grid */}
+                                        <div className="grid grid-cols-2 gap-4">
+                                            {Object.entries(details.model_metrics).map(([key, value]) => {
+                                                if (key === 'confusion_matrix') return null;
+                                                return (
+                                                    <div key={key} className="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center hover:bg-white/10 transition-colors">
+                                                        <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">{key}</span>
+                                                        <span className="text-xl font-mono font-bold text-white">{value}</span>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+
+                                        {/* Confusion Matrix Placeholder */}
+                                        {details.model_metrics.confusion_matrix && (
+                                            <div className="relative aspect-video bg-black/40 border border-white/10 rounded-xl flex flex-col items-center justify-center p-4 group/matrix overflow-hidden">
+                                                <div className="grid grid-cols-2 gap-1 w-24 h-24 mb-2 opacity-50 group-hover/matrix:opacity-100 transition-opacity duration-500">
+                                                    <div className="bg-accent/80 rounded color-burn" /> <div className="bg-accent/20 rounded" />
+                                                    <div className="bg-accent/20 rounded" /> <div className="bg-accent/90 rounded" />
+                                                </div>
+                                                <span className="text-[10px] uppercase tracking-widest text-gray-500 group-hover/matrix:text-accent transition-colors">Confusion Matrix</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Responsible AI / Ethics */}
+                            {details.ethics && (
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 text-green-400">
+                                        <ShieldCheck size={18} />
+                                        <h4 className="font-bold text-sm uppercase tracking-widest">Responsible AI & Ethics</h4>
+                                    </div>
+                                    <ul className="grid md:grid-cols-1 gap-3">
+                                        {details.ethics.map((note, i) => (
+                                            <li key={i} className="flex items-start gap-3 text-sm text-gray-400 pl-4 border-l border-green-500/20">
+                                                <span className="text-green-500/60 mt-0.5">•</span>
+                                                <span>{note}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* Learnings */}
+                            <div className="bg-accent/5 p-6 rounded-2xl border border-accent/10">
+                                <div className="flex items-center gap-2 mb-3 text-accent">
+                                    <Lightbulb size={16} />
+                                    <span className="text-[10px] uppercase tracking-widest font-bold">Key Takeaway</span>
+                                </div>
+                                <p className="text-gray-300 text-sm italic leading-relaxed">
+                                    "{details.learnings}"
+                                </p>
+                            </div>
+
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
-        </motion.div>
+        </motion.div >
     );
 }

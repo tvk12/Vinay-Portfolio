@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import { BookOpen, Calendar, Clock, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, Clock, ArrowRight, X } from 'lucide-react';
+import { useState } from 'react';
 
 const blogPosts = [
     {
@@ -7,25 +8,61 @@ const blogPosts = [
         excerpt: "Deep dive into fine-tuning transformer models for real-time text classification with high precision.",
         date: "Jan 2024",
         readTime: "6 min read",
-        tags: ["BERT", "NLP", "PyTorch"]
+        tags: ["BERT", "NLP", "PyTorch"],
+        content: `
+            Building a real-time spam detector requires balancing model complexity with inference speed. 
+            In this post, I detail the process of fine-tuning a 'bert-base-uncased' model on over 5,500 messages.
+            
+            Key highlights:
+            • Data Preprocessing: Handling emojis and non-standard text in SMS.
+            • Fine-Tuning: Leveraging HuggingFace Transformers with a custom PyTorch classification head.
+            • Optimization: Using ONNX Runtime to reduce inference latency to sub-100ms.
+            • Deployment: API creation with FastAPI and containerization with Docker.
+        `
     },
     {
         title: "Deploying ML models with FastAPI + AWS",
         excerpt: "Step-by-step guide to containerizing and deploying production-ready inference APIs.",
         date: "Dec 2023",
         readTime: "8 min read",
-        tags: ["FastAPI", "Docker", "MLOps"]
+        tags: ["FastAPI", "Docker", "MLOps"],
+        content: `
+            Taking a model from a Jupyter Notebook to production is a critical skill for any ML Engineer. 
+            This guide covers the deployment of a Scikit-Learn model via an AWS EC2 instance.
+            
+            Topics covered:
+            • API Structure: Designing robust endpoints with FastAPI.
+            • Containerization: Writing efficient Dockerfiles for ML environments.
+            • Cloud Infrastructure: Setting up Security Groups and VPCs on AWS.
+            • Monitoring: Implementing Prometheus and Grafana for health checks.
+        `
     },
     {
         title: "Lessons from building reusable ML pipelines",
         excerpt: "Strategies for creating modular, scalable, and maintainable data science workflows.",
         date: "Nov 2023",
         readTime: "5 min read",
-        tags: ["Python", "Architecture", "Best Practices"]
+        tags: ["Python", "Architecture", "Best Practices"],
+        content: `
+            Scalability in machine learning isn't just about data size; it's about the developer's ability to reuse logic. 
+            I share the design patterns that helped me scale from one to ten simultaneous experiments.
+            
+            Key takeaways:
+            • Modularity: Separating feature engineering from model training.
+            • Versioning: Utilizing DVC for dataset and model tracking.
+            • Configurations: Moving from hardcoded parameters to YAML-based systems.
+            • Automation: Setting up CI/CD with GitHub Actions for automated testing.
+        `
     }
 ];
 
 export default function Blog() {
+    const [expandedIndex, setExpandedIndex] = useState(null);
+
+    const togglePost = (index) => {
+        setExpandedIndex(expandedIndex === index ? null : index);
+    };
+
     return (
         <div className="pt-32 pb-20 px-4">
             <motion.div
@@ -43,11 +80,12 @@ export default function Blog() {
                 {blogPosts.map((post, index) => (
                     <motion.div
                         key={index}
+                        layout
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
                         viewport={{ once: true }}
-                        className="glass-card group p-8 hover:border-accent/20 transition-all cursor-pointer relative overflow-hidden"
+                        className={`glass-card group p-8 hover:border-accent/20 transition-all relative overflow-hidden ${expandedIndex === index ? 'border-accent/30' : ''}`}
                     >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 blur-3xl -z-10 group-hover:bg-accent/10 transition-colors" />
 
@@ -68,9 +106,33 @@ export default function Blog() {
                             {post.excerpt}
                         </p>
 
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">
-                            Read Full Post <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                        </div>
+                        <button
+                            onClick={() => togglePost(index)}
+                            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent hover:text-white transition-colors"
+                        >
+                            {expandedIndex === index ? (
+                                <>Close Post <X size={14} /></>
+                            ) : (
+                                <>Read Full Post <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" /></>
+                            )}
+                        </button>
+
+                        <AnimatePresence>
+                            {expandedIndex === index && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="mt-8 pt-8 border-t border-white/10"
+                                >
+                                    <div className="prose prose-invert max-w-none">
+                                        <p className="text-gray-300 whitespace-pre-line leading-relaxed">
+                                            {post.content}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </motion.div>
                 ))}
             </div>
