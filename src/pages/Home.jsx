@@ -3,28 +3,29 @@ import { Link } from 'react-router-dom';
 import { Database, Cloud, Code2, BrainCircuit, Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
 import AboutSection from '../components/AboutSection';
+import ExperienceSection from '../components/ExperienceSection';
 
 export default function Home() {
     const techStack = [
         {
             category: "AI / ML",
             icon: BrainCircuit,
-            skills: ["PyTorch", "TensorFlow", "Scikit-Learn", "NLP", "LLMs"]
+            skills: ["PyTorch", "TensorFlow", "Scikit-Learn", "NLP", "LLMs", "MLOps"]
         },
         {
             category: "Cloud / DevOps",
             icon: Cloud,
-            skills: ["AWS", "Docker", "MLOps", "Terraform", "CI/CD"]
+            skills: ["AWS", "GCP", "Azure", "Kubernetes", "Docker", "Terraform", "Jenkins"]
         },
         {
             category: "Data",
             icon: Database,
-            skills: ["SQL", "Pandas", "NoSQL", "Snowflake", "ETL"]
+            skills: ["SQL", "Pandas", "NoSQL", "Kafka", "ETL", "Distributed Systems"]
         },
         {
             category: "Languages / API",
             icon: Code2,
-            skills: ["Python", "Java", "C++", "FastAPI", "React"]
+            skills: ["Python", "Java", "C++", "FastAPI", "React", "Serverless"]
         }
     ];
 
@@ -66,10 +67,11 @@ export default function Home() {
                     transition={{ delay: 0.2, duration: 0.8 }}
                     className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed font-sans"
                 >
-                    A Master's student at the University of Dayton, pushing boundaries in
+                    Recent Master's graduate from the University of Dayton, currently
+                    <span className="text-white font-semibold"> Co-Founder & Founding ML Engineer at Neuralyn LLC</span>. Specializing in
                     <span className="text-white font-semibold"> Artificial Intelligence</span>,
                     <span className="text-white font-semibold"> Machine Learning</span>, and
-                    <span className="text-white font-semibold"> Cloud Architecture</span>.
+                    <span className="text-white font-semibold"> Multi-Cloud Architecture</span>.
                 </motion.p>
 
                 <motion.div
@@ -131,6 +133,16 @@ export default function Home() {
                 <AboutSection />
             </motion.div>
 
+            {/* Experience Section */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="mt-32 w-full max-w-6xl px-4"
+            >
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-20" />
+                <ExperienceSection />
+            </motion.div>
 
 
             {/* Final CTA Section */}

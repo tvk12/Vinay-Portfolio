@@ -6,8 +6,10 @@ export default function AboutSection() {
     const skills = [
         "Python", "SQL", "Java", "C",
         "Machine Learning", "Deep Learning", "Data Preprocessing", "Feature Engineering",
-        "NumPy", "Pandas", "Matplotlib", "Scikit-learn", "TensorFlow",
-        "AWS (EC2, S3, IAM)", "Cloud Architecture",
+        "NumPy", "Pandas", "Matplotlib", "Scikit-learn", "TensorFlow", "PyTorch",
+        "AWS (EC2, S3, IAM, EKS)", "GCP", "Azure", "Cloud Architecture",
+        "Kubernetes", "Docker", "Terraform", "Jenkins", "Kafka",
+        "Distributed Systems", "Serverless Architectures", "MLOps",
         "MySQL", "Git", "GitHub", "Linux"
     ];
 
@@ -15,7 +17,9 @@ export default function AboutSection() {
         {
             degree: "Master of Science in Computer Science",
             institution: "University of Dayton, Dayton, OH",
-            period: "2025",
+            period: "December 2024",
+            gpa: "3.64/4.0",
+            honors: "Dean's List",
             description: "Relevant Coursework: Machine Learning, Artificial Intelligence, Data Structures and Algorithms, Database Management Systems, Operating Systems, Computer Vision, Natural Language Processing, Cloud Computing Frameworks."
         },
         {
@@ -28,7 +32,6 @@ export default function AboutSection() {
 
     const certifications = [
         "National Level Project Expo 2022",
-        "Goldman Sachs Engineering Virtual Program Certificate 2022",
         "APSSDC Certified AWS Cloud Computing 2021"
     ];
 
@@ -45,14 +48,15 @@ export default function AboutSection() {
                     <h2 className="text-4xl font-bold mb-8 text-white tracking-tight">Professional <span className="text-accent">Summary</span></h2>
                     <div className="space-y-6 text-gray-400 leading-relaxed text-lg">
                         <p>
-                            Master’s in Computer Science student at the <span className="text-white font-medium">University of Dayton</span>, specializing in AI/ML and Cloud Systems. I bridge the gap between complex data science research and production-ready applications.
+                            Recent Master's graduate in Computer Science from the <span className="text-white font-medium">University of Dayton</span> (Dec 2024, GPA 3.64/4.0). Currently <span className="text-white font-medium">Co-Founder & Founding ML Engineer at Neuralyn LLC</span>, building scalable AI/ML solutions from the ground up. I bridge the gap between cutting-edge research and production-ready applications.
                         </p>
                         <ul className="space-y-3 list-none">
                             {[
-                                "Expertise in NLP, Deep Learning, and Predictive Modeling.",
-                                "Proven track record in building and deploying scalable MLOps pipelines.",
-                                "Cloud-native mindset with hands-on AWS experience.",
-                                "Focus on Secure AI, model ethics, and performance optimization."
+                                "Expertise in NLP, Deep Learning, and Predictive Modeling with production deployments.",
+                                "Proven track record in building and deploying scalable MLOps pipelines at startup and enterprise scale.",
+                                "Multi-cloud expertise across AWS, GCP, and Azure with hands-on DevOps experience.",
+                                "Strong foundation in Distributed Systems, Kubernetes, Terraform, and event-driven architectures.",
+                                "Focus on Secure AI, model ethics, performance optimization, and engineering best practices."
                             ].map((strength, i) => (
                                 <li key={i} className="flex gap-3 items-start">
                                     <span className="text-accent mt-1.5">•</span>
@@ -130,6 +134,12 @@ export default function AboutSection() {
                                                 {edu.degree}
                                             </h4>
                                             <p className="text-gray-400 font-medium">{edu.institution}</p>
+                                            {edu.gpa && (
+                                                <div className="flex gap-4 mt-2 text-sm">
+                                                    <span className="text-gray-500">GPA: <span className="text-accent font-semibold">{edu.gpa}</span></span>
+                                                    {edu.honors && <span className="text-gray-500">• <span className="text-white font-medium">{edu.honors}</span></span>}
+                                                </div>
+                                            )}
                                         </div>
                                         <span className="text-accent font-mono text-xs px-3 py-1 bg-accent/10 rounded-full border border-accent/20">
                                             {edu.period}
