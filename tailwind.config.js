@@ -7,40 +7,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#030303",     // Deep Pitch Black
-        secondary: "#0a0a0a",   // Sophisticated Dark Gray
+        primary: "#201d1b",
+        secondary: "#f6c331",
         accent: {
-          DEFAULT: "#ff4d00",   // Sunset Orange
-          light: "#ff9500",    // Golden Sun
-          dark: "#cc3d00",     // Burnt Orange
+          DEFAULT: "#d2b5f4",
+          light: "#ecdffd",
+          dark: "#b695de",
         },
-        dark: "#050505",
-        light: "#fafafa",       // Off-white for better readability
-        card: "rgba(255, 255, 255, 0.03)",
-        border: "rgba(255, 255, 255, 0.08)",
+        canvas: "#ede3ff",
+        surface: "#fffdfa",
+        muted: "#6f6b73",
+        ink: "#201d1b",
+        subtle: "#cfc8dc",
+        light: "#fffdfa",
+        card: "#fffdfa",
+        border: "#201d1b",
+        mustard: "#f6c331",
+        lavender: "#e7dcff",
+        lavenderStrong: "#d2b5f4",
+        blueSoft: "#dfe6f6",
+        pinkSoft: "#f7e3ea",
+        mintSoft: "#96d6bb",
+        yellowSoft: "#ffd85a",
+        greenDark: "#0d4d23",
+        redSoft: "#ef9ba3",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Outfit', 'sans-serif'],
+        sans: ['Figtree', 'sans-serif'],
+        display: ['Figtree', 'sans-serif'],
         signature: ['Caveat', 'cursive'],
       },
-      animation: {
-        'shimmer': 'shimmer 2s linear infinite',
-        'border-trace': 'border-trace 4s linear infinite',
-      },
-      keyframes: {
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-      },
       backgroundImage: {
-        'gradient-conic': 'conic-gradient(var(--tw-gradient-stops))',
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'sunset-gradient': 'linear-gradient(to right, #ff4d00, #ff9500)',
+        'sunset-gradient': 'linear-gradient(180deg, #f6c331 0%, #d9a910 100%)',
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.8)',
+        'glass': '6px 6px 0 rgba(32, 29, 27, 0.12)',
+        'outline': '4px 4px 0 rgba(32, 29, 27, 0.14)',
       },
     },
   },

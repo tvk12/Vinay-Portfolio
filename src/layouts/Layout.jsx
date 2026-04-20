@@ -1,42 +1,31 @@
 import { Outlet } from 'react-router-dom';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion as Motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Background from '../components/Background';
+import ScrollToTop from '../components/ScrollToTop';
 
 export default function Layout() {
-    const { scrollYProgress } = useScroll();
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    restDelta: 0.001,
+  });
 
-    return (
-        <div className="min-h-screen flex flex-col bg-primary text-light font-sans selection:bg-accent selection:text-white relative">
-            <motion.div className="scroll-progress" style={{ scaleX }} />
-            <Background />
-            <Navbar />
-            <main className="flex-grow container mx-auto px-4 py-8 pt-24 relative z-10">
-                <Outlet />
-            </main>
-
-            {/* Signature Bottom Right */}
-            <div className="fixed bottom-6 right-8 z-[60] pointer-events-none select-none">
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 1 }}
-                    className="flex flex-col items-end"
-                >
-                    <span className="font-signature text-3xl text-white/40 hover:text-accent/60 transition-colors duration-500 cursor-default">
-                        Vinay.T
-                    </span>
-                    <div className="w-12 h-px bg-gradient-to-r from-transparent to-accent/30 mt-1" />
-                </motion.div>
-            </div>
-
-            <Footer />
+  return (
+    <div className="relative flex min-h-screen flex-col bg-canvas text-ink font-sans">
+      <ScrollToTop />
+      <Motion.div className="scroll-progress" style={{ scaleX }} />
+      <Background />
+      <Navbar />
+      <div aria-hidden="true" className="h-[84px] md:h-[96px]" />
+      <main className="relative z-10 flex-grow px-4 pb-16 pt-3 md:px-8 md:pt-4">
+        <div className="mx-auto max-w-[1400px]">
+          <Outlet />
         </div>
-    );
+      </main>
+      <Footer />
+    </div>
+  );
 }

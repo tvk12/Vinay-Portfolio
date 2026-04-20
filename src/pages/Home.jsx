@@ -1,183 +1,204 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Database, Cloud, Code2, BrainCircuit, Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
-import Button from '../components/Button';
-import AboutSection from '../components/AboutSection';
-import ExperienceSection from '../components/ExperienceSection';
+import { BrainCircuit, Cloud, Database, Code2 as CodeIcon } from 'lucide-react';
+import { motion as Motion } from 'framer-motion';
+import ArtworkBlock from '../components/ArtworkBlock';
+import PixelatedImage from '../components/PixelatedImage';
+import SiteIcon from '../components/SiteIcon';
+import SocialLinks from '../components/SocialLinks';
+import {
+  heroSkillGroups,
+  homeHero,
+  projectGallery,
+  siteData,
+} from '../data/portfolioData';
+
+function SkillGroupCard({ group }) {
+  const icons = {
+    ai: BrainCircuit,
+    cloud: Cloud,
+    data: Database,
+    code: CodeIcon,
+  };
+  const Icon = icons[group.icon] || CodeIcon;
+
+  return (
+    <Motion.article
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.35 }}
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="group rounded-[1.75rem] border border-white/10 bg-[#121212] p-5 text-white shadow-[0_16px_40px_rgba(0,0,0,0.28)] transition-shadow duration-300 hover:shadow-[0_22px_55px_rgba(0,0,0,0.34)] md:p-6"
+    >
+      <div className="flex items-center gap-3">
+        <Icon size={22} className="text-[#ff6a2a]" strokeWidth={2.4} />
+        <h3 className="text-[1.15rem] font-bold tracking-tight md:text-[1.3rem]">{group.title}</h3>
+      </div>
+
+      <div className="mt-5 flex flex-wrap gap-3">
+        {group.items.map((item, index) => (
+          <Motion.span
+            key={item}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.24, delay: index * 0.04 }}
+            className="rounded-[0.65rem] border border-white/10 bg-[#1f1f1f] px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.12em] text-[#aeb2bb]"
+          >
+            {item}
+          </Motion.span>
+        ))}
+      </div>
+    </Motion.article>
+  );
+}
+
+function GalleryCard({ item }) {
+  const tones = {
+    yellow: 'bg-[#ffcb24]',
+    red: 'bg-[#e22a1c]',
+    white: 'bg-white',
+    green: 'bg-[#0d4d23]',
+    orange: 'bg-[#ffcb3b]',
+  };
+
+  return (
+    <article className="min-w-[220px] overflow-hidden rounded-[2rem] border-[3px] border-border bg-surface shadow-glass md:min-w-[260px]">
+      <ArtworkBlock variant={item.artwork} className={`h-[180px] ${tones[item.tone] || ''} md:h-[200px]`} />
+      <div className="border-t-[3px] border-border bg-surface px-4 py-3">
+        <h3 className="text-[0.98rem] font-black text-ink md:text-[1.08rem]">{item.title}</h3>
+        <p className="mt-1 text-[0.86rem] text-muted md:text-[0.94rem]">{item.subtitle}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function Home() {
-    const techStack = [
-        {
-            category: "AI / ML",
-            icon: BrainCircuit,
-            skills: ["PyTorch", "TensorFlow", "Scikit-Learn", "NLP", "LLMs", "MLOps"]
-        },
-        {
-            category: "Cloud / DevOps",
-            icon: Cloud,
-            skills: ["AWS", "GCP", "Azure", "Kubernetes", "Docker", "Terraform", "Jenkins"]
-        },
-        {
-            category: "Data",
-            icon: Database,
-            skills: ["SQL", "Pandas", "NoSQL", "Kafka", "ETL", "Distributed Systems"]
-        },
-        {
-            category: "Languages / API",
-            icon: Code2,
-            skills: ["Python", "Java", "C++", "FastAPI", "React", "Serverless"]
-        }
-    ];
+  const loopingGallery = [...projectGallery, ...projectGallery];
 
-    return (
-        <div className="relative min-h-[90vh] flex flex-col items-center justify-center pt-20 overflow-hidden">
-            {/* Background Decorative Element - Subtly enhanced */}
-            <motion.div
-                animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.1, 0.15, 0.1],
-                }}
-                transition={{
-                    duration: 10,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[120px] -z-10"
-            />
-
-            <div className="container mx-auto px-4 text-center z-10">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="mb-8"
-                >
-                    <span className="inline-block px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5 text-accent text-xs font-bold tracking-[0.2em] uppercase mb-6">
-                        Available for Opportunities
-                    </span>
-                    <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tighter leading-[0.9]">
-                        VINAY KUMAR <br />
-                        <span className="text-gradient text-glow">TANNEERU</span>
-                    </h1>
-                </motion.div>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.8 }}
-                    className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed font-sans"
-                >
-                    Recent Master's graduate from the University of Dayton, currently
-                    <span className="text-white font-semibold"> Co-Founder & Founding ML Engineer at Neuralyn LLC</span>. Specializing in
-                    <span className="text-white font-semibold"> Artificial Intelligence</span>,
-                    <span className="text-white font-semibold"> Machine Learning</span>, and
-                    <span className="text-white font-semibold"> Multi-Cloud Architecture</span>.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="flex flex-wrap gap-4 justify-center items-center"
-                >
-                    <Link to="/projects">
-                        <Button variant="primary" className="min-w-[180px]">Explore Projects</Button>
-                    </Link>
-                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                        <Button variant="secondary" className="min-w-[180px]">View Resume</Button>
-                    </a>
-                    <a href="/resume.pdf" download="Vinay_Kumar_Tanneeru_Resume.pdf">
-                        <Button variant="outline" className="min-w-[180px]">Download Resume</Button>
-                    </a>
-                </motion.div>
+  return (
+    <div className="space-y-14 pb-10 md:space-y-20">
+      <section className="-mt-3 outline-card overflow-hidden p-6 md:-mt-4 md:p-10">
+        <div className="grid gap-10 lg:grid-cols-[1.45fr_0.55fr]">
+          <div>
+            <div className="mb-6 flex items-center gap-4">
+              <SiteIcon name="compass" size={22} />
+              <p className="text-[1.05rem] font-black text-ink md:text-[1.3rem]">{homeHero.eyebrow}</p>
             </div>
 
-            {/* Tech Stack Section */}
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="mt-32 w-full max-w-6xl px-4"
-            >
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl font-bold mb-4">Tech <span className="text-accent">Stack</span></h2>
-                    <p className="text-gray-400">Specialized tools and technologies I use to build intelligent systems.</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {techStack.map((group, i) => (
-                        <div key={i} className="glass p-6 rounded-2xl border border-white/5 hover:border-accent/20 transition-all group">
-                            <div className="flex items-center gap-3 mb-4">
-                                <group.icon className="text-accent group-hover:scale-110 transition-transform" size={24} />
-                                <h3 className="font-bold text-white/90">{group.category}</h3>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {group.skills.map((skill, si) => (
-                                    <span key={si} className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-1 bg-white/5 rounded border border-white/5">
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
+            <h1 className="max-w-[980px] font-display text-[2.35rem] font-medium leading-[1.05] tracking-[-0.05em] text-ink md:text-[4.35rem]">
+              {homeHero.title}
+            </h1>
 
-            <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="mt-32 w-full max-w-6xl px-4"
-            >
-                <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-20" />
-                <AboutSection />
-            </motion.div>
+            <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {heroSkillGroups.map((group) => (
+                <SkillGroupCard key={group.title} group={group} />
+              ))}
+            </div>
+          </div>
 
-            {/* Experience Section */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="mt-32 w-full max-w-6xl px-4"
-            >
-                <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-20" />
-                <ExperienceSection />
-            </motion.div>
+          <aside className="outline-card bg-[#f7e3ea] p-5">
+            <div className="rounded-[1.7rem] border-[3px] border-border bg-[#111111] p-1.5">
+              <div className="overflow-hidden rounded-[1.35rem] border-[2px] border-[#252525] bg-black h-[300px] md:h-[410px]">
+                <Motion.div
+                  className="relative h-full w-full"
+                  animate={{ scale: [1.02, 1.04, 1.02], x: [0, -3, 0], y: [0, 2, 0] }}
+                  transition={{ duration: 7, ease: 'easeInOut', repeat: Infinity }}
+                >
+                  <PixelatedImage
+                    src={siteData.profileImage}
+                    alt={siteData.name}
+                    cropY={0.2}
+                    pixelSize={14}
+                    className="h-full w-full scale-[1.03] saturate-[0.92] contrast-[1.06] brightness-[0.95]"
+                  />
+                  <Motion.div
+                    className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_50%,transparent_50%)] bg-[size:100%_12px] opacity-25"
+                    animate={{ y: ['-4%', '4%', '-4%'] }}
+                    transition={{ duration: 6, ease: 'linear', repeat: Infinity }}
+                  />
+                </Motion.div>
+              </div>
+            </div>
+            <div className="mt-5">
+              <p className="text-[1.35rem] font-black text-ink md:text-[1.5rem]">Want to know more?</p>
+              <p className="mt-2 inline-flex items-center gap-2 bg-white px-2 py-1 text-[1rem] text-muted">
+                <span aria-hidden="true">👆</span>
+                Click on About me
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
 
+      <section className="outline-card p-6 md:p-10">
+        <div className="mb-8 flex items-start justify-between gap-6">
+          <div>
+            <div className="mb-4 flex items-center gap-4">
+              <SiteIcon name="code2" size={20} />
+              <p className="text-[1rem] font-black text-ink md:text-[1.25rem]">Project journey</p>
+            </div>
+            <h2 className="font-display text-[2.15rem] font-black text-ink md:text-[3rem]">
+              They marked my journey.
+            </h2>
+          </div>
 
-            {/* Final CTA Section */}
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="my-32 w-full max-w-4xl mx-auto text-center px-4"
+          <div className="hidden gap-4 md:flex">
+            <button type="button" className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-subtle bg-surface text-muted">
+              <SiteIcon name="arrowLeft" />
+            </button>
+            <button type="button" className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-border bg-surface text-ink">
+              <SiteIcon name="arrowRight" />
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-hidden">
+          <Motion.div
+            className="flex w-max gap-5 pb-2"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 22, ease: 'linear', repeat: Infinity }}
+          >
+            {loopingGallery.map((item, index) => (
+              <GalleryCard key={`${item.key}-${index}`} item={item} />
+            ))}
+          </Motion.div>
+        </div>
+      </section>
+
+      <section className="outline-card p-6 md:p-10">
+        <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr]">
+          <div>
+            <div className="mb-4 flex items-center gap-4">
+              <SiteIcon name="sparkles" size={20} />
+              <p className="text-[1rem] font-black text-ink md:text-[1.25rem]">Contact</p>
+            </div>
+            <h2 className="font-display text-[2.15rem] font-black leading-[1.05] text-ink md:text-[3rem]">
+              Ready to build something useful together.
+            </h2>
+            <p className="mt-4 max-w-[800px] text-[1rem] leading-8 text-muted md:text-[1.1rem]">
+              {siteData.intro}
+            </p>
+          </div>
+          <div className="flex flex-col gap-4 lg:items-end lg:justify-center">
+            <Link to="/contact" className="site-button site-button-purple w-full justify-center lg:w-auto">
+              Talk to me
+            </Link>
+            <a
+              href={siteData.resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-button site-button-yellow w-full justify-center lg:w-auto"
             >
-                <div className="glass-card p-12 rounded-[2.5rem] relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <h2 className="text-4xl font-bold mb-6">Ready to collaborate?</h2>
-                    <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                        Reach out for <span className="text-white">AI/ML</span>, <span className="text-white">Cloud</span>, or <span className="text-white">MLOps</span> opportunities.
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-6">
-                        {[
-                            { icon: Mail, href: "mailto:vinaykumartanneeru@gmail.com", label: "Email Me" },
-                            { icon: Linkedin, href: "https://www.linkedin.com/in/vinaykumartanneeru/", label: "LinkedIn" },
-                            { icon: Github, href: "https://github.com/repos?q=owner%3A%40me", label: "GitHub" }
-                        ].map((cta, i) => (
-                            <a
-                                key={i}
-                                href={cta.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-3 px-6 py-3 glass rounded-full hover:border-accent/40 hover:text-white transition-all group/cta"
-                            >
-                                <cta.icon size={20} className="text-accent group-hover/cta:scale-110 transition-transform" />
-                                <span className="font-semibold text-sm">{cta.label}</span>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </motion.div>
-        </div >
-    );
+              Resume
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div className="hidden">
+        <SocialLinks />
+      </div>
+    </div>
+  );
 }

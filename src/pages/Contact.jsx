@@ -1,102 +1,127 @@
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowUpRight, Mail, MapPin, Send, X } from 'lucide-react';
 import Button from '../components/Button';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { siteData } from '../data/portfolioData';
 
 export default function Contact() {
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const message = formData.get('message');
+  const navigate = useNavigate();
 
-        const mailtoLink = `mailto:vinaykumartanneeru@gmail.com?subject=Contact from ${name}&body=From: ${name} (${email})%0D%0A%0D%0A${message}`;
-        window.location.href = mailtoLink;
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
 
-    return (
-        <div className="max-w-4xl mx-auto py-32 px-4">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center mb-16"
-            >
-                <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">Let's <span className="text-accent">Connect</span></h2>
-                <p className="text-gray-400 text-lg max-w-xl mx-auto">
-                    Have a question or want to discuss a project? My inbox is always open.
-                </p>
+    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+    const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+    window.location.href = `mailto:${siteData.email}?subject=${subject}&body=${body}`;
+  };
 
-                <div className="flex justify-center gap-6 mt-10">
-                    {[
-                        { icon: Github, href: "https://github.com/repos?q=owner%3A%40me", label: "GitHub" },
-                        { icon: Linkedin, href: "https://www.linkedin.com/in/vinaykumartanneeru/", label: "LinkedIn" },
-                        { icon: Mail, href: "mailto:vinaykumartanneeru@gmail.com", label: "Email" }
-                    ].map((social, i) => (
-                        <motion.a
-                            key={i}
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ y: -5, scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="p-4 glass-card rounded-2xl text-gray-400 hover:text-accent hover:border-accent/30 transition-all duration-300"
-                            aria-label={social.label}
-                        >
-                            <social.icon size={24} />
-                        </motion.a>
-                    ))}
+  return (
+    <div className="pb-8">
+      <Breadcrumbs current="Contact" />
+
+      <section className="outline-card mx-auto max-w-[1240px] overflow-hidden p-5 md:p-7">
+        <div className="grid gap-6 lg:grid-cols-[0.7fr_1.2fr]">
+          <div className="rounded-[1.6rem] border-[3px] border-border bg-[#f7e3ea] p-5 md:p-6">
+            <p className="text-[0.92rem] font-black text-ink md:text-[1rem]">Hi!</p>
+            <h1 className="mt-2 font-display text-[1.8rem] font-black leading-[1.03] text-ink md:text-[2.45rem]">
+              Let&apos;s build something useful.
+            </h1>
+            <p className="mt-4 text-[0.92rem] leading-6 text-muted">
+              Send a note about ML systems, product work, engineering roles, or collaboration.
+            </p>
+
+            <div className="mt-6 space-y-3">
+              <a
+                href={`mailto:${siteData.email}`}
+                className="flex items-center gap-3 rounded-[1rem] border-[3px] border-border bg-surface px-3 py-2.5 text-[0.9rem] font-bold text-ink"
+              >
+                <Mail size={18} />
+                {siteData.email}
+              </a>
+              <div className="flex items-center gap-3 rounded-[1rem] border-[3px] border-border bg-surface px-3 py-2.5 text-[0.9rem] font-bold text-ink">
+                <MapPin size={18} />
+                {siteData.location}
+              </div>
+              <a
+                href={siteData.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 rounded-[1rem] border-[3px] border-border bg-[#ffd85a] px-3 py-2.5 text-[0.9rem] font-bold text-ink"
+              >
+                LinkedIn <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="rounded-[1.6rem] border-[3px] border-border bg-surface p-5 shadow-[4px_4px_0_rgba(32,29,27,0.14)] md:p-6">
+            <div className="flex items-start justify-between gap-5">
+              <div>
+                <p className="text-[0.85rem] font-black text-muted">Contact form</p>
+                <h2 className="mt-1 font-display text-[1.55rem] font-black text-ink md:text-[2rem]">Talk to me</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigate('/')}
+                className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-border bg-surface shadow-[4px_4px_0_rgba(32,29,27,0.12)]"
+                aria-label="Close contact modal"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="mt-5 space-y-4">
+              <label className="block">
+                <span className="mb-2 block text-[0.88rem] font-semibold text-muted">Your name</span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Vinay Kumar"
+                  className="w-full rounded-[1rem] border-[3px] border-subtle bg-white px-4 py-2.5 text-[0.92rem] text-ink outline-none placeholder:text-muted focus:border-border"
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-[0.88rem] font-semibold text-muted">Your email</span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                  className="w-full rounded-[1rem] border-[3px] border-subtle bg-white px-4 py-2.5 text-[0.92rem] text-ink outline-none placeholder:text-muted focus:border-border"
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-[0.88rem] font-semibold text-muted">Message</span>
+                <textarea
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder="Write the context of the contact here."
+                  className="w-full resize-none rounded-[1rem] border-[3px] border-subtle bg-white px-4 py-2.5 text-[0.92rem] leading-6 text-ink outline-none placeholder:text-muted focus:border-border"
+                />
+              </label>
+
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <p className="text-right text-[0.92rem] text-muted">0 / 800</p>
+                <div className="flex gap-4">
+                  <button type="button" onClick={() => navigate(-1)} className="site-button">
+                    Cancel
+                  </button>
+                  <Button variant="primary" type="submit" className="px-7 py-3 text-[1rem]">
+                    Send <Send size={17} />
+                  </Button>
                 </div>
-            </motion.div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="max-w-2xl mx-auto"
-            >
-                <form
-                    className="glass-card p-10 space-y-8"
-                    onSubmit={handleSubmit}
-                >
-                    <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-accent">Full Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                required
-                                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 transition-colors placeholder:text-gray-600"
-                                placeholder="John Doe"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-accent">Email Address</label>
-                            <input
-                                type="email"
-                                name="email"
-                                required
-                                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 transition-colors placeholder:text-gray-600"
-                                placeholder="john@example.com"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-widest text-accent">Message</label>
-                        <textarea
-                            name="message"
-                            rows="5"
-                            required
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 transition-colors placeholder:text-gray-600 resize-none"
-                            placeholder="How can I help you?"
-                        ></textarea>
-                    </div>
-
-                    <Button variant="primary" type="submit" className="w-full py-4 text-base">
-                        Send Message
-                    </Button>
-                </form>
-            </motion.div>
+              </div>
+            </div>
+          </form>
         </div>
-    );
+      </section>
+    </div>
+  );
 }

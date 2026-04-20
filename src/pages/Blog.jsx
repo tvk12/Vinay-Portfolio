@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -65,7 +65,7 @@ export default function Blog() {
 
     return (
         <div className="pt-32 pb-20 px-4">
-            <motion.div
+            <Motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-16 text-center"
@@ -74,11 +74,11 @@ export default function Blog() {
                 <p className="text-gray-400 max-w-2xl mx-auto italic">
                     Exploring the intersection of Machine Learning, Cloud Systems, and Data Engineering.
                 </p>
-            </motion.div>
+            </Motion.div>
 
             <div className="max-w-4xl mx-auto space-y-8">
                 {blogPosts.map((post, index) => (
-                    <motion.div
+                    <Motion.div
                         key={index}
                         layout
                         initial={{ opacity: 0, x: -20 }}
@@ -119,7 +119,7 @@ export default function Blog() {
 
                         <AnimatePresence>
                             {expandedIndex === index && (
-                                <motion.div
+                                <Motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
                                     exit={{ opacity: 0, height: 0 }}
@@ -130,10 +130,10 @@ export default function Blog() {
                                             {post.content}
                                         </p>
                                     </div>
-                                </motion.div>
+                                </Motion.div>
                             )}
                         </AnimatePresence>
-                    </motion.div>
+                    </Motion.div>
                 ))}
             </div>
         </div>
